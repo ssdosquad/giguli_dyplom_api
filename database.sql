@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 29 2021 г., 07:53
+-- Время создания: Апр 29 2021 г., 10:36
 -- Версия сервера: 10.3.13-MariaDB
 -- Версия PHP: 7.1.22
 
@@ -30,13 +30,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account` (
   `id` int(11) NOT NULL,
-  `name` varchar(60) NOT NULL,
-  `surname` varchar(60) NOT NULL,
-  `patronymic` varchar(60) NOT NULL,
   `email` varchar(120) NOT NULL,
   `login` varchar(60) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `account`
+--
+
+INSERT INTO `account` (`id`, `email`, `login`, `password`) VALUES
+(1, 'asd@asd.asd', 'SPEFlSFtRxUEJtc', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq');
 
 -- --------------------------------------------------------
 
@@ -50,6 +54,13 @@ CREATE TABLE `account_session` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `active` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `account_session`
+--
+
+INSERT INTO `account_session` (`account_id`, `session_key`, `date_created`, `active`) VALUES
+(1, '9707c91e15741d73e8756eff3d1fefbd8725ba2268eaf37ab4b1154fba837819', '2021-04-29 12:28:59', 1);
 
 -- --------------------------------------------------------
 
@@ -120,6 +131,13 @@ CREATE TABLE `car` (
   `date_end_guarantee` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `car`
+--
+
+INSERT INTO `car` (`id`, `manufacturer`, `model`, `win`, `engine`, `date_plan_to`, `date_change_oil`, `date_end_guarantee`) VALUES
+(1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06');
+
 -- --------------------------------------------------------
 
 --
@@ -183,6 +201,12 @@ ALTER TABLE `account`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `account_session`
+--
+ALTER TABLE `account_session`
+  ADD KEY `account_id` (`account_id`);
+
+--
 -- Индексы таблицы `actions`
 --
 ALTER TABLE `actions`
@@ -214,6 +238,19 @@ ALTER TABLE `work`
   ADD KEY `FOREGIN_KEY` (`car_id`);
 
 --
+-- Индексы таблицы `work_act`
+--
+ALTER TABLE `work_act`
+  ADD KEY `work_id` (`work_id`);
+
+--
+-- Индексы таблицы `work_master`
+--
+ALTER TABLE `work_master`
+  ADD KEY `master_id` (`master_id`),
+  ADD KEY `work_id` (`work_id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -221,7 +258,7 @@ ALTER TABLE `work`
 -- AUTO_INCREMENT для таблицы `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `actions`
@@ -239,7 +276,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT для таблицы `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `master`
@@ -252,6 +289,35 @@ ALTER TABLE `master`
 --
 ALTER TABLE `work`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `account_session`
+--
+ALTER TABLE `account_session`
+  ADD CONSTRAINT `account_session_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `work`
+--
+ALTER TABLE `work`
+  ADD CONSTRAINT `work_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `work_act`
+--
+ALTER TABLE `work_act`
+  ADD CONSTRAINT `work_act_ibfk_1` FOREIGN KEY (`work_id`) REFERENCES `work` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `work_master`
+--
+ALTER TABLE `work_master`
+  ADD CONSTRAINT `work_master_ibfk_1` FOREIGN KEY (`master_id`) REFERENCES `master` (`id`),
+  ADD CONSTRAINT `work_master_ibfk_2` FOREIGN KEY (`work_id`) REFERENCES `work` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

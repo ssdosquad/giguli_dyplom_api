@@ -1,8 +1,62 @@
 [
     {
-        "url" : "/",
+        "url" : "/auth/",
         "method" : "get",
         "controller" : "api",
-        "function" : ""
+        "function" : "auth",
+        "fields": [
+            "login", "password"
+        ]
+    },
+
+    {
+        "url" : "/reg/",
+        "method" : "post",
+        "controller" : "api",
+        "function" : "reg",
+        "fields": [
+            "email", "password"
+        ]
+    },
+
+    {
+        "url" : "/getCarList/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getCarList",
+        "fields": [
+            
+        ]
+    },
+
+    {
+        "url" : "/getCarInfo/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getCarInfo",
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/getWorkInfo/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getWorkInfo",
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/addCar/",
+        "method" : "post",
+        "controller" : "api",
+        "function" : "addCar",
+        "auth": true,
+        "fields": [
+            "win"
+        ]
     }
 ]

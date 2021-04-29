@@ -1,7 +1,5 @@
 <?php
 
-// use \Exception;
-
 const ROOTDIR = __DIR__;
 
 require_once "php/utils.php";

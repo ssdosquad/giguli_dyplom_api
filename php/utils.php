@@ -10,6 +10,7 @@ function load_config($name){
 }
 
 function load_controller($route){
+    global $currentOptions;
     require_once ROOTDIR."/controller/{$route["controller"]}.php";
 
     if(function_exists($route["function"])){
@@ -34,6 +35,16 @@ function verify_field($name, $value, $min = 4, $max = 120, $forriden_symbols = "
     }
 
     return $value;
+}
+
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
 }
 
 function send_answer($data = [], $type = false){
