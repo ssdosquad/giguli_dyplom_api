@@ -24,6 +24,7 @@
         "method" : "get",
         "controller" : "api",
         "function" : "getCarList",
+        "auth": true,
         "fields": [
             
         ]

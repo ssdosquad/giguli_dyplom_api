@@ -38,7 +38,15 @@ function reg(){
 }
 
 function getCarList(){
+    global $currentOptions, $currentUser;
 
+    $account_id = $currentUser['id'];
+    $sql = "SELECT * FROM car WHERE account_id = $account_id";
+
+    if( $query = dbQuery($sql) ){
+        send_answer(["cars" => $query], true);
+    }
+    send_answer(["К Вашему аккаунту не привязан ни один автомобиль"]);
 }
 
 function getCarInfo(){
@@ -57,14 +65,15 @@ function getWorkInfo(){
 }
 
 function addCar(){
-    global $currentOptions;
+    global $currentOptions, $currentUser;
 
+    $account_id = $currentUser['id'];
     $manufacturer = "Lada";
     $model = "Granta";
     $win = verify_field("WIN", $currentOptions['win'], 4, 120);
     $engine = "879847532788948";
 
-    if( dbExecute("INSERT INTO car (manufacturer, model, win, engine) VALUES ('{$manufacturer}', '{$model}', '{$win}', '{$engine}')") ){
+    if( dbExecute("INSERT INTO car (account_id, manufacturer, model, win, engine) VALUES ('{$account_id}', '{$manufacturer}', '{$model}', '{$win}', '{$engine}')") ){
         send_answer([], true);
     }
     send_answer(["Неизвестная ошибка записи нового авто в базу"]);

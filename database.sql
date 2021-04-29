@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 29 2021 г., 10:36
+-- Время создания: Апр 29 2021 г., 11:31
 -- Версия сервера: 10.3.13-MariaDB
 -- Версия PHP: 7.1.22
 
@@ -122,6 +122,7 @@ INSERT INTO `article` (`id`, `title`, `cover`, `text`, `date`) VALUES
 
 CREATE TABLE `car` (
   `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
   `manufacturer` varchar(60) NOT NULL,
   `model` varchar(60) NOT NULL,
   `win` varchar(60) NOT NULL,
@@ -135,8 +136,8 @@ CREATE TABLE `car` (
 -- Дамп данных таблицы `car`
 --
 
-INSERT INTO `car` (`id`, `manufacturer`, `model`, `win`, `engine`, `date_plan_to`, `date_change_oil`, `date_end_guarantee`) VALUES
-(1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06');
+INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`, `date_plan_to`, `date_change_oil`, `date_end_guarantee`) VALUES
+(1, 1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06');
 
 -- --------------------------------------------------------
 
@@ -222,7 +223,8 @@ ALTER TABLE `article`
 -- Индексы таблицы `car`
 --
 ALTER TABLE `car`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `account_id` (`account_id`);
 
 --
 -- Индексы таблицы `master`
@@ -299,6 +301,12 @@ ALTER TABLE `work`
 --
 ALTER TABLE `account_session`
   ADD CONSTRAINT `account_session_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `car`
+--
+ALTER TABLE `car`
+  ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `work`
