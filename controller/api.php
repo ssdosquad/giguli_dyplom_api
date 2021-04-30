@@ -55,13 +55,24 @@ function getCarInfo(){
     $id = $currentOptions['id'];
 
     if( $query = dbQueryOne("SELECT * FROM car WHERE id = '{$id}'") ){
-        send_answer(["car" => $query], true);
+        $works = dbQuery("SELECT * FROM work WHERE car_id = '{$id}'");
+        send_answer(["car" => $query, "works" => $works], true);
     }
     send_answer(["Машины с таким ID не существует"]);
 }
 
 function getWorkInfo(){
+    global $currentOptions;
 
+    $id = $currentOptions['id'];
+
+    if($work = dbQueryOne("SELECT * FROM work WHERE id = '{$id}'")){
+        $work_acts = dbQuery("SELECT * FROM work_act WHERE work_id = '{$work['id']}'");
+        $masters = dbQuery("SELECT master.* FROM master, work_master WHERE work_master.work_id = '{$work['id']}' AND master.id = work_master.master_id");
+        send_answer(["work" => $work, "acts" => $work_acts, "masters" => $masters], true);
+    }
+
+    send_answer(["Работы с таким ID не существует"]);
 }
 
 function addCar(){
@@ -77,4 +88,22 @@ function addCar(){
         send_answer([], true);
     }
     send_answer(["Неизвестная ошибка записи нового авто в базу"]);
+}
+
+function accountEdit(){
+    global $currentOptions, $currentUser;
+
+    $name = verify_field("Имя", $currentOptions['name'], 2, 60);
+    $surname = verify_field("Фамилия", $currentOptions['surname'], 2, 60);
+    $patronymic = verify_field("Отчество", $currentOptions['patronymic'], 2, 60);
+    $date_born = verify_field("Дата рождения", $currentOptions['date_born'], 1, 120);
+    $passport_series = verify_field("Серия паспорта", $currentOptions['passport_series'], 1, 120);
+    $passport_id = verify_field("Номер паспорта", $currentOptions['passport_id'], 1, 120);
+    $passport_issued = verify_field("Кем выдан", $currentOptions['passport_issued'], 2, 120);
+    $passport_date = verify_field("Дата выдачи паспорта", $currentOptions['passport_date'], 1, 120);
+
+    if( dbExecute("UPDATE account SET name = '{$name}', surname = '{$surname}', patronymic = '{$patronymic}', date_born = '{$date_born}', passport_series = '{$passport_series}', passport_id = '{$passport_id}', passport_issued = '{$passport_issued}', passport_date = '{$passport_date}'  WHERE id = '{$currentUser['id']}'") ){
+        send_answer([], true);
+    }
+    send_answer(["Неизвестная ошибка обновления данных об аккаунте в базе"]);
 }

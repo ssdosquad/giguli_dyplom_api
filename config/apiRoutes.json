@@ -5,7 +5,8 @@
         "controller" : "api",
         "function" : "auth",
         "fields": [
-            "login", "password"
+            "login", 
+            "password"
         ]
     },
 
@@ -15,7 +16,8 @@
         "controller" : "api",
         "function" : "reg",
         "fields": [
-            "email", "password"
+            "email", 
+            "password"
         ]
     },
 
@@ -24,10 +26,7 @@
         "method" : "get",
         "controller" : "api",
         "function" : "getCarList",
-        "auth": true,
-        "fields": [
-            
-        ]
+        "auth": true
     },
 
     {
@@ -58,6 +57,24 @@
         "auth": true,
         "fields": [
             "win"
+        ]
+    },
+
+    {
+        "url" : "/accountEdit/",
+        "method" : "post",
+        "controller" : "api",
+        "function" : "accountEdit",
+        "auth": true,
+        "fields": [
+            "name", 
+            "surname", 
+            "patronymic", 
+            "date_born", 
+            "passport_series", 
+            "passport_id",
+            "passport_issued",
+            "passport_date"
         ]
     }
 ]

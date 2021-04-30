@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 29 2021 г., 11:31
+-- Время создания: Апр 30 2021 г., 07:15
 -- Версия сервера: 10.3.13-MariaDB
 -- Версия PHP: 7.1.22
 
@@ -32,15 +32,23 @@ CREATE TABLE `account` (
   `id` int(11) NOT NULL,
   `email` varchar(120) NOT NULL,
   `login` varchar(60) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `surname` varchar(60) DEFAULT NULL,
+  `patronymic` varchar(60) DEFAULT NULL,
+  `date_born` varchar(45) NOT NULL,
+  `passport_series` int(11) NOT NULL,
+  `passport_id` int(11) NOT NULL,
+  `passport_issued` varchar(120) NOT NULL,
+  `passport_date` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `account`
 --
 
-INSERT INTO `account` (`id`, `email`, `login`, `password`) VALUES
-(1, 'asd@asd.asd', 'SPEFlSFtRxUEJtc', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq');
+INSERT INTO `account` (`id`, `email`, `login`, `password`, `name`, `surname`, `patronymic`, `date_born`, `passport_series`, `passport_id`, `passport_issued`, `passport_date`) VALUES
+(1, 'asd@asd.asd', 'SPEFlSFtRxUEJtc', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017');
 
 -- --------------------------------------------------------
 
@@ -169,6 +177,14 @@ CREATE TABLE `work` (
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `work`
+--
+
+INSERT INTO `work` (`id`, `car_id`, `type`, `recomendation`, `mileage`, `date`, `price`) VALUES
+(1, 1, 'repair', 'Никогда не заводите эту красотку, пока она не завела Вас :)', 0, '2021-04-30 09:11:47', 1),
+(2, 1, 'to', 'Выключи телевизор, насри в холодильник', 10000, '2021-04-30 09:11:47', 123000);
+
 -- --------------------------------------------------------
 
 --
@@ -179,6 +195,16 @@ CREATE TABLE `work_act` (
   `work_id` int(11) NOT NULL,
   `text` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `work_act`
+--
+
+INSERT INTO `work_act` (`work_id`, `text`) VALUES
+(1, 'Завели'),
+(1, 'Выкинули'),
+(2, 'Выпили пиво'),
+(2, 'Включили телевизор');
 
 -- --------------------------------------------------------
 
@@ -290,7 +316,7 @@ ALTER TABLE `master`
 -- AUTO_INCREMENT для таблицы `work`
 --
 ALTER TABLE `work`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
