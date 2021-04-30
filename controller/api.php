@@ -50,11 +50,11 @@ function getCarList(){
 }
 
 function getCarInfo(){
-    global $currentOptions;
+    global $currentOptions, $currentUser;
 
     $id = $currentOptions['id'];
 
-    if( $query = dbQueryOne("SELECT * FROM car WHERE id = '{$id}'") ){
+    if( $query = dbQueryOne("SELECT * FROM car WHERE id = '{$id}' AND account_id = '{$currentUser['id']}'") ){
         $works = dbQuery("SELECT * FROM work WHERE car_id = '{$id}'");
         send_answer(["car" => $query, "works" => $works], true);
     }
@@ -62,11 +62,11 @@ function getCarInfo(){
 }
 
 function getWorkInfo(){
-    global $currentOptions;
+    global $currentOptions, $currentUser;
 
     $id = $currentOptions['id'];
 
-    if($work = dbQueryOne("SELECT * FROM work WHERE id = '{$id}'")){
+    if($work = dbQueryOne("SELECT work.* FROM work, car WHERE work.id = '{$id}' AND car.id = work.car_id AND car.account_id = '{$currentUser['id']}'")){
         $work_acts = dbQuery("SELECT * FROM work_act WHERE work_id = '{$work['id']}'");
         $masters = dbQuery("SELECT master.* FROM master, work_master WHERE work_master.work_id = '{$work['id']}' AND master.id = work_master.master_id");
         send_answer(["work" => $work, "acts" => $work_acts, "masters" => $masters], true);
