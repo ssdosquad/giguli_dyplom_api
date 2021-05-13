@@ -61,6 +61,17 @@
     },
 
     {
+        "url" : "/removeCar/",
+        "method" : "post",
+        "controller" : "api",
+        "function" : "removeCar",
+        "auth": true,
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
         "url" : "/accountEdit/",
         "method" : "post",
         "controller" : "api",
@@ -76,5 +87,19 @@
             "passport_issued",
             "passport_date"
         ]
+    },
+
+    {
+        "url" : "/getActions/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getActions"
+    },
+
+    {
+        "url" : "/getArticles/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getArticles"
     }
 ]

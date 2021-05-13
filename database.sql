@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Апр 30 2021 г., 07:15
--- Версия сервера: 10.3.13-MariaDB
--- Версия PHP: 7.1.22
+-- Хост: 127.0.0.1
+-- Время создания: Май 13 2021 г., 18:23
+-- Версия сервера: 10.4.14-MariaDB
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -48,7 +47,12 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `login`, `password`, `name`, `surname`, `patronymic`, `date_born`, `passport_series`, `passport_id`, `passport_issued`, `passport_date`) VALUES
-(1, 'asd@asd.asd', 'SPEFlSFtRxUEJtc', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017');
+(1, 'asd@asd.asd', 'SPEFlSFtRxUEJtc', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017'),
+(2, 'asdf@mail.ru', 'asdf', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017'),
+(3, 'dasdsadsad@mail.ru', '2PX24wI0I7HT3AP', '$2y$10$LYpJx9RQDHuUEc.LtGyD1eMSVTFFm7IBd92ASqil0SFxLfa8nvGKa', NULL, NULL, NULL, '', 0, 0, '', ''),
+(4, 'sdasda@mail.ru', 'h09WQGlXcvzfCcq', '$2y$10$8GbFty95Za/32oYGQ4UxEuHi2liOTKgxQR0CS53rVpYHXPMe4gzsK', NULL, NULL, NULL, '', 0, 0, '', ''),
+(5, 'dasdsadasdasddsad@mail.ru', 'K6RR2jZegCmFVIX', '$2y$10$Y8njHoJyPkMxwTCWhMM5fOuyJCfv6BeHADYV.Q2HMQiaUijgxD0IK', NULL, NULL, NULL, '', 0, 0, '', ''),
+(6, 'asdfghgfgjkl@mail.ru', '6XGmNtM0C20iF4W', '$2y$10$6AO5heWf4/IpB9y81eC.K.1Dm1IoVj0q8vL/wCN5ZwDcCIqIklV9q', NULL, NULL, NULL, '', 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -68,7 +72,14 @@ CREATE TABLE `account_session` (
 --
 
 INSERT INTO `account_session` (`account_id`, `session_key`, `date_created`, `active`) VALUES
-(1, '9707c91e15741d73e8756eff3d1fefbd8725ba2268eaf37ab4b1154fba837819', '2021-04-29 12:28:59', 1);
+(1, '9707c91e15741d73e8756eff3d1fefbd8725ba2268eaf37ab4b1154fba837819', '2021-04-29 12:28:59', 1),
+(1, 'a5581d0e2b801341ec1633832089e9cc1589b5fd995ac4999ae8abc7d340a4a0', '2021-05-12 11:14:20', 1),
+(1, 'a97d06103e036d6c062a9f68cfe9cfa1e55c981e4473f03ab5776cf7ee76a060', '2021-05-12 11:19:59', 1),
+(1, '32c4d5889564e47bc7d3681d055ed5c032e818149f40ad5d814df1cde18a687c', '2021-05-12 11:24:00', 1),
+(2, 'd36d2b7c3324a6536b3a2627974b3e051e556f473cef01cf30566ee7d9adb373', '2021-05-12 11:24:12', 1),
+(1, 'ef0f6c2ec8237d40ccc7c2a36fc6f52eda51e8215627150237665a87d52ee171', '2021-05-12 12:23:40', 1),
+(1, 'db8f5a498fa5ef92b0077686179545f94b8152642abb5f16b6fcf8cf45a24795', '2021-05-12 19:55:30', 1),
+(1, 'd9e1197503184189011db4de84945d18c86c7e974988bd88c9802b0f32711c3c', '2021-05-13 08:00:07', 1);
 
 -- --------------------------------------------------------
 
@@ -145,7 +156,13 @@ CREATE TABLE `car` (
 --
 
 INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`, `date_plan_to`, `date_change_oil`, `date_end_guarantee`) VALUES
-(1, 1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06');
+(1, 1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06'),
+(2, 1, 'Lada', 'Granta', '86891268912646219', '879847532788948', '2021-05-13 10:11:35', '2021-05-13 10:11:35', '2021-05-13 10:11:35'),
+(3, 1, 'Lada', 'Granta', '1234567890121314', '879847532788948', '2021-05-13 10:22:37', '2021-05-13 10:22:37', '2021-05-13 10:22:37'),
+(4, 1, 'Lada', 'Granta', 'dhhdhdh', '879847532788948', '2021-05-13 10:23:06', '2021-05-13 10:23:06', '2021-05-13 10:23:06'),
+(5, 1, 'Lada', 'Granta', 'ghgyugh', '879847532788948', '2021-05-13 10:23:53', '2021-05-13 10:23:53', '2021-05-13 10:23:53'),
+(6, 1, 'Lada', 'Granta', 'dhdhhx', '879847532788948', '2021-05-13 10:25:08', '2021-05-13 10:25:08', '2021-05-13 10:25:08'),
+(7, 1, 'Lada', 'Granta', '647557567', '879847532788948', '2021-05-13 10:25:34', '2021-05-13 10:25:34', '2021-05-13 10:25:34');
 
 -- --------------------------------------------------------
 
@@ -286,7 +303,7 @@ ALTER TABLE `work_master`
 -- AUTO_INCREMENT для таблицы `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `actions`
@@ -304,7 +321,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT для таблицы `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `master`

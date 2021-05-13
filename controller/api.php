@@ -32,7 +32,11 @@ function reg(){
     $login = generateRandomString(15);
 
     if( dbExecute("INSERT INTO account (login, email, password) VALUES ('{$login}', '{$email}', '{$password}')") ){
-        send_answer([], true);
+        $sessionkey = create_session(dbLastId());
+        if( dbExecute("INSERT INTO account_session (account_id, session_key) VALUES ('{$query['id']}', '{$sessionkey}')") ){
+            send_answer(["token" => $sessionkey], true);
+        }
+        send_answer(["Неизвестная ошибка записи новой сессии в базу"]);
     }
     send_answer(["Неизвестная ошибка записи пользователя в базу"]);
 }
@@ -90,6 +94,17 @@ function addCar(){
     send_answer(["Неизвестная ошибка записи нового авто в базу"]);
 }
 
+function removeCar(){
+    global $currentOptions, $currentUser;
+    $car_id = $currentOptions['id'];
+
+    if( dbExecute("DELETE FROM car WHERE account_id = '{$account_id}' AND id = '{$car_id}'") ){
+        send_answer([], true);
+    }
+
+    send_answer(["Неизвестная ошибка удаления авто"]);
+}
+
 function accountEdit(){
     global $currentOptions, $currentUser;
 
@@ -106,4 +121,18 @@ function accountEdit(){
         send_answer([], true);
     }
     send_answer(["Неизвестная ошибка обновления данных об аккаунте в базе"]);
+}
+
+function getActions(){
+    if( $query = dbQuery("SELECT * FROM actions") ){
+        send_answer(["actions" => $query], true);
+    }
+    send_answer(["Акции отсутствуют"]);
+}
+
+function getArticles(){
+    if( $query = dbQuery("SELECT * FROM article") ){
+        send_answer(["actions" => $query], true);
+    }
+    send_answer(["Акции отсутствуют"]);
 }
