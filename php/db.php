@@ -6,7 +6,7 @@ $link = null;
 try{
     $link = mysqli_connect($config_db["host"], $config_db["user"], $config_db["password"], $config_db["name"]);
 }catch(Exception $e){
-    exit($e->getMessage());
+    exit("DB connection incorrect");
 }
 
 function dbQuery($sql){

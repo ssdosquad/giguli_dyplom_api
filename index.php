@@ -6,7 +6,7 @@ require_once "init.php";
 
 try{
     $route = getRoute(load_config("apiRoutes"));
-
+    
     if( $route !== false ){
         load_controller($route);
     } else {

@@ -1,14 +1,15 @@
 <?php
 
+$rootPath = "giguli/";
 $currentUrl = trim(array_shift(explode("?", $_SERVER["REQUEST_URI"])), "/");
 $currentMethod = strtolower($_SERVER["REQUEST_METHOD"]);
 $currentOptions = ($currentMethod == "get") ? $_GET : $_POST;
 
 function getRoute($routesList){
-    global $currentMethod, $currentOptions, $currentUrl, $level_access, $auth;
+    global $currentMethod, $currentOptions, $currentUrl, $level_access, $auth, $rootPath;
 
     foreach($routesList as $route){
-        if(trim($route["url"], "/") === $currentUrl && $route["method"] === $currentMethod){
+        if($rootPath.trim($route["url"], "/") === trim($currentUrl, "/") && $route["method"] === $currentMethod){
             if(isset($route["level_access"])){
                 if($route["level_access"] < $level_access){
                     load_error(401, "Доступ запрещён");
