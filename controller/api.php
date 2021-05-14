@@ -171,3 +171,35 @@ function getAccount(){
     global $currentUser;
     send_answer(["account" => $currentUser], true);
 }
+
+function getAllBooAuto(){
+    if( $query = dbQueryOne("SELECT * FROM boo_car") ){
+        send_answer(["cars" => $query], true);
+    }
+    send_answer(["Б/у автомобилей не найдено"]);
+}
+
+function getBooAuto(){
+    global $currentOptions;
+    $boo_car_id = $currentOptions['id'];
+    if( $query = dbQueryOne("SELECT * FROM boo_car WHERE id = '{$boo_car_id}' LIMIT 1") ){
+        send_answer(["car" => $query], true);
+    }
+    send_answer(["Машины с данным ID не найдено"]);
+}
+
+function getAllCatalogAuto(){
+    if( $query = dbQueryOne("SELECT * FROM catalog_car") ){
+        send_answer(["cars" => $query], true);
+    }
+    send_answer(["Новых автомобилей не найдено"]);
+}
+
+function getCatalogAuto(){
+    global $currentOptions;
+    $catalog_car_id = $currentOptions['id'];
+    if( $query = dbQueryOne("SELECT * FROM catalog_car WHERE id = '{$catalog_car_id}' LIMIT 1") ){
+        send_answer(["car" => $query], true);
+    }
+    send_answer(["Машины с данным ID не найдено"]);
+}

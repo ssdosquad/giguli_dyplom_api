@@ -139,5 +139,39 @@
         "controller" : "api",
         "function" : "getAccount",
         "auth": true
+    },
+
+    {
+        "url" : "/getAllBooAuto/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getAllBooAuto"
+    },
+
+    {
+        "url" : "/getAllCatalogAuto/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getAllBooAuto"
+    },
+
+    {
+        "url" : "/getBooAuto/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getBooAuto",
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/getCatalogAuto/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getCatalogAuto",
+        "fields": [
+            "id"
+        ]
     }
 ]
