@@ -101,5 +101,27 @@
         "method" : "get",
         "controller" : "api",
         "function" : "getArticles"
+    },
+
+    {
+        "url" : "/getArticle/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getArticle",
+        "fields": [
+            "id"
+        ]
+    },
+
+    {
+        "url" : "/requestWork/",
+        "method" : "post",
+        "controller" : "api",
+        "function" : "requestWork",
+        "fields": [
+            "id",
+            "type",
+            "text"
+        ]
     }
 ]

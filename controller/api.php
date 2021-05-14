@@ -131,8 +131,31 @@ function getActions(){
 }
 
 function getArticles(){
-    if( $query = dbQuery("SELECT * FROM article") ){
-        send_answer(["actions" => $query], true);
+    if( $query = dbQuery("SELECT id, title, cover, date FROM article") ){
+        send_answer(["articles" => $query], true);
     }
     send_answer(["Акции отсутствуют"]);
+}
+
+function getArticle(){
+    global $currentOptions;
+    $article_id = $currentOptions['id'];
+
+    if( $query = dbQueryOne("SELECT * FROM article WHERE id = '{$article_id}'") ){
+        send_answer(["article" => $query], true);
+    }
+    send_answer(["Акции отсутствуют"]);
+}
+
+function requestWork(){
+    global $currentOptions;
+
+    $car_id = verify_field("ID машины", $currentOptions['id'], 1, 0);
+    $type = (in_array($currentOptions['type'], ["to", "repair"])) ? $currentOptions['type'] : send_answer(["Неверный тип запроса"]);
+    $text = verify_field("Текст", $currentOptions['text'], 0, 1200);
+
+    if( dbExecute("INSERT INTO work_request (car_id, type, text) VALUES ('{$car_id}', '{$type}', '{$text}')") ){
+        send_answer([], true);
+    }
+    send_answer(["Неизвестная ошибка записи нового запроса"]);
 }
