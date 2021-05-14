@@ -41,6 +41,13 @@ function reg(){
     send_answer(["Неизвестная ошибка записи пользователя в базу"]);
 }
 
+function logout(){
+    if( dbExecute("UPDATE account_session SET active = 0 WHERE token = '{$_GET['token']}' LIMIT 1") ){
+        send_answer([], true);
+    }
+    send_answer(["Неизвестная ошибка, Вы навеки тут"], true);
+}
+
 function getCarList(){
     global $currentOptions, $currentUser;
 

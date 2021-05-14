@@ -22,6 +22,14 @@
     },
 
     {
+        "url" : "/logout/",
+        "method" : "post",
+        "controller" : "api",
+        "function" : "logout",
+        "auth": true
+    },
+
+    {
         "url" : "/getCarList/",
         "method" : "get",
         "controller" : "api",

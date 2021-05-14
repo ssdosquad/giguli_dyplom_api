@@ -6,7 +6,7 @@ $auth = false;
 
 if(isset($_GET['token'])){
     $token = $_GET['token'];
-    if( $query = dbQueryOne("SELECT account.* FROM account, account_session WHERE account_session.session_key = '{$token}' AND account.id = account_session.account_id") ){
+    if( $query = dbQueryOne("SELECT account.* FROM account, account_session WHERE account_session.session_key = '{$token}' AND account.id = account_session.account_id AND account_session.active = 1") ){
         $level_access = ($query["type"] === "moderator") ? 1 : 0;
         $currentUser = $query;
         $auth = true;
