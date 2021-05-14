@@ -152,7 +152,7 @@
         "url" : "/getAllCatalogAuto/",
         "method" : "get",
         "controller" : "api",
-        "function" : "getAllBooAuto"
+        "function" : "getAllCatalogAuto"
     },
 
     {

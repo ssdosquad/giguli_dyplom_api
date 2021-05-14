@@ -173,7 +173,7 @@ function getAccount(){
 }
 
 function getAllBooAuto(){
-    if( $query = dbQueryOne("SELECT * FROM boo_car") ){
+    if( $query = dbQuery("SELECT boo_car.id, boo_car.manufacturer, car_model.title as model, boo_car.year, boo_car.mileage FROM boo_car, car_model WHERE car_model.id = boo_car.car_model_id") ){
         send_answer(["cars" => $query], true);
     }
     send_answer(["Б/у автомобилей не найдено"]);
@@ -182,14 +182,14 @@ function getAllBooAuto(){
 function getBooAuto(){
     global $currentOptions;
     $boo_car_id = $currentOptions['id'];
-    if( $query = dbQueryOne("SELECT * FROM boo_car WHERE id = '{$boo_car_id}' LIMIT 1") ){
+    if( $query = dbQueryOne("SELECT boo_car.*, car_model.title as model, car_body.title as car_body FROM boo_car, car_model, car_body WHERE car_model.id = boo_car.car_model_id AND car_body.id = boo_car.car_body_id AND boo_car.id = '{$boo_car_id}'") ){
         send_answer(["car" => $query], true);
     }
     send_answer(["Машины с данным ID не найдено"]);
 }
 
 function getAllCatalogAuto(){
-    if( $query = dbQueryOne("SELECT * FROM catalog_car") ){
+    if( $query = dbQuery("SELECT catalog_car.id, catalog_car.manufacturer, car_model.title as model, catalog_car.year, car_body.title as car_body FROM catalog_car, car_model, car_body WHERE car_model.id = catalog_car.car_model_id AND car_body.id = catalog_car.car_body_id") ){
         send_answer(["cars" => $query], true);
     }
     send_answer(["Новых автомобилей не найдено"]);
@@ -198,7 +198,7 @@ function getAllCatalogAuto(){
 function getCatalogAuto(){
     global $currentOptions;
     $catalog_car_id = $currentOptions['id'];
-    if( $query = dbQueryOne("SELECT * FROM catalog_car WHERE id = '{$catalog_car_id}' LIMIT 1") ){
+    if( $query = dbQueryOne("SELECT catalog_car.*, car_model.title as model, car_body.title as car_body FROM catalog_car, car_model, car_body WHERE car_model.id = catalog_car.car_model_id AND car_body.id = catalog_car.car_body_id AND catalog_car.id = '{$catalog_car_id}'") ){
         send_answer(["car" => $query], true);
     }
     send_answer(["Машины с данным ID не найдено"]);

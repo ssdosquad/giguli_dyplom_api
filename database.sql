@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 14 2021 г., 11:51
+-- Время создания: Май 14 2021 г., 15:43
 -- Версия сервера: 8.0.19
 -- Версия PHP: 8.0.1
 
@@ -141,7 +141,7 @@ INSERT INTO `article` (`id`, `title`, `cover`, `text`, `date`) VALUES
 
 CREATE TABLE `boo_car` (
   `id` int NOT NULL,
-  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `manufacturer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `car_model_id` int NOT NULL,
   `year` int NOT NULL,
   `mileage` int NOT NULL,
@@ -156,8 +156,16 @@ CREATE TABLE `boo_car` (
   `height` int NOT NULL,
   `width` int NOT NULL,
   `length` int NOT NULL,
-  `functions` text COLLATE utf8mb4_general_ci NOT NULL
+  `functions` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `boo_car`
+--
+
+INSERT INTO `boo_car` (`id`, `manufacturer`, `car_model_id`, `year`, `mileage`, `engine_volume`, `engine_power`, `doors_number`, `car_body_id`, `trunk_volume`, `clearance`, `weight`, `tank_volume`, `height`, `width`, `length`, `functions`) VALUES
+(1, 'KIA', 3, 2018, 13050, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют'),
+(2, 'KIA', 4, 2013, 19250, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют');
 
 -- --------------------------------------------------------
 
@@ -198,9 +206,16 @@ INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`,
 
 CREATE TABLE `car_body` (
   `id` int NOT NULL,
-  `name` varchar(25) COLLATE utf8mb4_general_ci NOT NULL,
-  `title` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `car_body`
+--
+
+INSERT INTO `car_body` (`id`, `name`, `title`) VALUES
+(1, 'sedan', 'Седан');
 
 -- --------------------------------------------------------
 
@@ -210,9 +225,18 @@ CREATE TABLE `car_body` (
 
 CREATE TABLE `car_model` (
   `id` int NOT NULL,
-  `name` varchar(90) COLLATE utf8mb4_general_ci NOT NULL,
-  `title` varchar(90) COLLATE utf8mb4_general_ci NOT NULL
+  `title` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `car_model`
+--
+
+INSERT INTO `car_model` (`id`, `title`) VALUES
+(1, 'Granta'),
+(2, 'Largus'),
+(3, 'Ceed'),
+(4, 'Rio');
 
 -- --------------------------------------------------------
 
@@ -222,7 +246,7 @@ CREATE TABLE `car_model` (
 
 CREATE TABLE `catalog_car` (
   `id` int NOT NULL,
-  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `manufacturer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `car_model_id` int NOT NULL,
   `year` int NOT NULL,
   `engine_volume` double NOT NULL,
@@ -236,8 +260,16 @@ CREATE TABLE `catalog_car` (
   `height` int NOT NULL,
   `width` int NOT NULL,
   `length` int NOT NULL,
-  `functions` text COLLATE utf8mb4_general_ci NOT NULL
+  `functions` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `catalog_car`
+--
+
+INSERT INTO `catalog_car` (`id`, `manufacturer`, `car_model_id`, `year`, `engine_volume`, `engine_power`, `doors_number`, `car_body_id`, `trunk_volume`, `clearance`, `weight`, `tank_volume`, `height`, `width`, `length`, `functions`) VALUES
+(1, 'LADA', 1, 2016, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют'),
+(2, 'LADA', 2, 2020, 1.6, 96, 4, 1, 335, 140, 125, 80, 1500, 1700, 3905, 'Отсутствуют');
 
 -- --------------------------------------------------------
 
@@ -332,8 +364,8 @@ INSERT INTO `work_master` (`work_id`, `master_id`) VALUES
 CREATE TABLE `work_request` (
   `id` int NOT NULL,
   `car_id` int NOT NULL,
-  `type` enum('to','repair') COLLATE utf8mb4_general_ci NOT NULL,
-  `text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `type` enum('to','repair') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -459,7 +491,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT для таблицы `boo_car`
 --
 ALTER TABLE `boo_car`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `car`
@@ -471,19 +503,19 @@ ALTER TABLE `car`
 -- AUTO_INCREMENT для таблицы `car_body`
 --
 ALTER TABLE `car_body`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `car_model`
 --
 ALTER TABLE `car_model`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `catalog_car`
 --
 ALTER TABLE `catalog_car`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `master`
