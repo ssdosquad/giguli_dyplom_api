@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Май 13 2021 г., 18:23
--- Версия сервера: 10.4.14-MariaDB
--- Версия PHP: 7.2.34
+-- Хост: 127.0.0.1:3306
+-- Время создания: Май 14 2021 г., 08:40
+-- Версия сервера: 8.0.19
+-- Версия PHP: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `email` varchar(120) NOT NULL,
   `login` varchar(60) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -36,8 +36,8 @@ CREATE TABLE `account` (
   `surname` varchar(60) DEFAULT NULL,
   `patronymic` varchar(60) DEFAULT NULL,
   `date_born` varchar(45) NOT NULL,
-  `passport_series` int(11) NOT NULL,
-  `passport_id` int(11) NOT NULL,
+  `passport_series` int NOT NULL,
+  `passport_id` int NOT NULL,
   `passport_issued` varchar(120) NOT NULL,
   `passport_date` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -61,10 +61,10 @@ INSERT INTO `account` (`id`, `email`, `login`, `password`, `name`, `surname`, `p
 --
 
 CREATE TABLE `account_session` (
-  `account_id` int(11) NOT NULL,
+  `account_id` int NOT NULL,
   `session_key` varchar(255) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `active` int(1) NOT NULL DEFAULT 1
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -88,7 +88,7 @@ INSERT INTO `account_session` (`account_id`, `session_key`, `date_created`, `act
 --
 
 CREATE TABLE `actions` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `time` varchar(120) NOT NULL,
   `name` text NOT NULL,
   `text` text NOT NULL,
@@ -114,11 +114,11 @@ INSERT INTO `actions` (`id`, `time`, `name`, `text`, `image`) VALUES
 --
 
 CREATE TABLE `article` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `title` text NOT NULL,
   `cover` varchar(255) NOT NULL,
   `text` text NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -140,15 +140,15 @@ INSERT INTO `article` (`id`, `title`, `cover`, `text`, `date`) VALUES
 --
 
 CREATE TABLE `car` (
-  `id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `account_id` int NOT NULL,
   `manufacturer` varchar(60) NOT NULL,
   `model` varchar(60) NOT NULL,
   `win` varchar(60) NOT NULL,
   `engine` varchar(60) NOT NULL,
-  `date_plan_to` datetime NOT NULL DEFAULT current_timestamp(),
-  `date_change_oil` datetime NOT NULL DEFAULT current_timestamp(),
-  `date_end_guarantee` datetime NOT NULL DEFAULT current_timestamp()
+  `date_plan_to` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_change_oil` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_end_guarantee` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -171,7 +171,7 @@ INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`,
 --
 
 CREATE TABLE `master` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `name` varchar(60) NOT NULL,
   `surname` varchar(60) NOT NULL,
   `patronymic` varchar(60) NOT NULL,
@@ -185,13 +185,13 @@ CREATE TABLE `master` (
 --
 
 CREATE TABLE `work` (
-  `id` int(11) NOT NULL,
-  `car_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `car_id` int NOT NULL,
   `type` enum('to','repair') NOT NULL DEFAULT 'to',
   `recomendation` varchar(200) NOT NULL,
-  `mileage` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `price` int(11) NOT NULL
+  `mileage` int NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `price` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -209,7 +209,7 @@ INSERT INTO `work` (`id`, `car_id`, `type`, `recomendation`, `mileage`, `date`, 
 --
 
 CREATE TABLE `work_act` (
-  `work_id` int(11) NOT NULL,
+  `work_id` int NOT NULL,
   `text` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -230,9 +230,23 @@ INSERT INTO `work_act` (`work_id`, `text`) VALUES
 --
 
 CREATE TABLE `work_master` (
-  `work_id` int(11) NOT NULL,
-  `master_id` int(11) NOT NULL
+  `work_id` int NOT NULL,
+  `master_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `work_request`
+--
+
+CREATE TABLE `work_request` (
+  `id` int NOT NULL,
+  `car_id` int NOT NULL,
+  `type` enum('to','repair') COLLATE utf8mb4_general_ci NOT NULL,
+  `text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Индексы сохранённых таблиц
@@ -296,6 +310,13 @@ ALTER TABLE `work_master`
   ADD KEY `work_id` (`work_id`);
 
 --
+-- Индексы таблицы `work_request`
+--
+ALTER TABLE `work_request`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `car_id` (`car_id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -303,37 +324,43 @@ ALTER TABLE `work_master`
 -- AUTO_INCREMENT для таблицы `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `actions`
 --
 ALTER TABLE `actions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `article`
 --
 ALTER TABLE `article`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `master`
 --
 ALTER TABLE `master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `work`
 --
 ALTER TABLE `work`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT для таблицы `work_request`
+--
+ALTER TABLE `work_request`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -369,6 +396,12 @@ ALTER TABLE `work_act`
 ALTER TABLE `work_master`
   ADD CONSTRAINT `work_master_ibfk_1` FOREIGN KEY (`master_id`) REFERENCES `master` (`id`),
   ADD CONSTRAINT `work_master_ibfk_2` FOREIGN KEY (`work_id`) REFERENCES `work` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `work_request`
+--
+ALTER TABLE `work_request`
+  ADD CONSTRAINT `work_request_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
