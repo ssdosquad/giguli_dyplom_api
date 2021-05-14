@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 14 2021 г., 08:40
+-- Время создания: Май 14 2021 г., 09:28
 -- Версия сервера: 8.0.19
 -- Версия PHP: 8.0.1
 
@@ -136,6 +136,32 @@ INSERT INTO `article` (`id`, `title`, `cover`, `text`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `boo_car`
+--
+
+CREATE TABLE `boo_car` (
+  `id` int NOT NULL,
+  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `car_model_id` int NOT NULL,
+  `year` int NOT NULL,
+  `mileage` int NOT NULL,
+  `engine_volume` double NOT NULL,
+  `engine_power` double NOT NULL,
+  `doors_number` int NOT NULL,
+  `car_body_id` int NOT NULL,
+  `trunk_volume` double NOT NULL,
+  `clearance` int NOT NULL,
+  `weight` int NOT NULL,
+  `tank_volume` double NOT NULL,
+  `height` int NOT NULL,
+  `width` int NOT NULL,
+  `length` int NOT NULL,
+  `functions` text COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `car`
 --
 
@@ -167,6 +193,55 @@ INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`,
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `car_body`
+--
+
+CREATE TABLE `car_body` (
+  `id` int NOT NULL,
+  `name` varchar(25) COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(45) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `car_model`
+--
+
+CREATE TABLE `car_model` (
+  `id` int NOT NULL,
+  `name` varchar(90) COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(90) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `catalog_car`
+--
+
+CREATE TABLE `catalog_car` (
+  `id` int NOT NULL,
+  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `car_model_id` int NOT NULL,
+  `year` int NOT NULL,
+  `engine_volume` double NOT NULL,
+  `engine_power` double NOT NULL,
+  `doors_number` int NOT NULL,
+  `car_body_id` int NOT NULL,
+  `trunk_volume` double NOT NULL,
+  `clearance` int NOT NULL,
+  `weight` int NOT NULL,
+  `tank_volume` double NOT NULL,
+  `height` int NOT NULL,
+  `width` int NOT NULL,
+  `length` int NOT NULL,
+  `functions` text COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `master`
 --
 
@@ -177,6 +252,13 @@ CREATE TABLE `master` (
   `patronymic` varchar(60) NOT NULL,
   `position` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `master`
+--
+
+INSERT INTO `master` (`id`, `name`, `surname`, `patronymic`, `position`) VALUES
+(1, 'Данил', 'Ленченков', 'Сергеевич', 'Старший механник');
 
 -- --------------------------------------------------------
 
@@ -234,6 +316,13 @@ CREATE TABLE `work_master` (
   `master_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `work_master`
+--
+
+INSERT INTO `work_master` (`work_id`, `master_id`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -277,11 +366,39 @@ ALTER TABLE `article`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `boo_car`
+--
+ALTER TABLE `boo_car`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `car_body_id` (`car_body_id`),
+  ADD KEY `car_model_id` (`car_model_id`);
+
+--
 -- Индексы таблицы `car`
 --
 ALTER TABLE `car`
   ADD PRIMARY KEY (`id`),
   ADD KEY `account_id` (`account_id`);
+
+--
+-- Индексы таблицы `car_body`
+--
+ALTER TABLE `car_body`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `car_model`
+--
+ALTER TABLE `car_model`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `catalog_car`
+--
+ALTER TABLE `catalog_car`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `car_body_id` (`car_body_id`),
+  ADD KEY `car_model_id` (`car_model_id`);
 
 --
 -- Индексы таблицы `master`
@@ -339,16 +456,40 @@ ALTER TABLE `article`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT для таблицы `boo_car`
+--
+ALTER TABLE `boo_car`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `car`
 --
 ALTER TABLE `car`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT для таблицы `car_body`
+--
+ALTER TABLE `car_body`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `car_model`
+--
+ALTER TABLE `car_model`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `catalog_car`
+--
+ALTER TABLE `catalog_car`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `master`
 --
 ALTER TABLE `master`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `work`
@@ -373,10 +514,24 @@ ALTER TABLE `account_session`
   ADD CONSTRAINT `account_session_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`);
 
 --
+-- Ограничения внешнего ключа таблицы `boo_car`
+--
+ALTER TABLE `boo_car`
+  ADD CONSTRAINT `boo_car_ibfk_1` FOREIGN KEY (`car_body_id`) REFERENCES `car_body` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `boo_car_ibfk_2` FOREIGN KEY (`car_model_id`) REFERENCES `car_model` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Ограничения внешнего ключа таблицы `car`
 --
 ALTER TABLE `car`
   ADD CONSTRAINT `car_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `catalog_car`
+--
+ALTER TABLE `catalog_car`
+  ADD CONSTRAINT `catalog_car_ibfk_1` FOREIGN KEY (`car_body_id`) REFERENCES `car_body` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `catalog_car_ibfk_2` FOREIGN KEY (`car_model_id`) REFERENCES `car_model` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `work`
