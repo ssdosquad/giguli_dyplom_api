@@ -123,5 +123,13 @@
             "type",
             "text"
         ]
+    },
+
+    {
+        "url" : "/getAccount/",
+        "method" : "get",
+        "controller" : "api",
+        "function" : "getAccount",
+        "auth": true
     }
 ]

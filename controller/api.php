@@ -159,3 +159,8 @@ function requestWork(){
     }
     send_answer(["Неизвестная ошибка записи нового запроса"]);
 }
+
+function getAccount(){
+    global $currentUser;
+    send_answer(["account" => $currentUser], true);
+}
