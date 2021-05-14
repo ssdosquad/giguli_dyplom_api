@@ -23,7 +23,7 @@
 
     {
         "url" : "/logout/",
-        "method" : "post",
+        "method" : "get",
         "controller" : "api",
         "function" : "logout",
         "auth": true
