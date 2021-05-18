@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Май 14 2021 г., 15:43
--- Версия сервера: 8.0.19
--- Версия PHP: 8.0.1
+-- Хост: 127.0.0.1
+-- Время создания: Май 18 2021 г., 08:29
+-- Версия сервера: 10.4.14-MariaDB
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `email` varchar(120) NOT NULL,
   `login` varchar(60) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -36,8 +36,8 @@ CREATE TABLE `account` (
   `surname` varchar(60) DEFAULT NULL,
   `patronymic` varchar(60) DEFAULT NULL,
   `date_born` varchar(45) NOT NULL,
-  `passport_series` int NOT NULL,
-  `passport_id` int NOT NULL,
+  `passport_series` int(11) NOT NULL,
+  `passport_id` int(11) NOT NULL,
   `passport_issued` varchar(120) NOT NULL,
   `passport_date` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -47,12 +47,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`id`, `email`, `login`, `password`, `name`, `surname`, `patronymic`, `date_born`, `passport_series`, `passport_id`, `passport_issued`, `passport_date`) VALUES
-(1, 'asd@asd.asd', 'SPEFlSFtRxUEJtc', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017'),
-(2, 'asdf@mail.ru', 'asdf', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017'),
-(3, 'dasdsadsad@mail.ru', '2PX24wI0I7HT3AP', '$2y$10$LYpJx9RQDHuUEc.LtGyD1eMSVTFFm7IBd92ASqil0SFxLfa8nvGKa', NULL, NULL, NULL, '', 0, 0, '', ''),
-(4, 'sdasda@mail.ru', 'h09WQGlXcvzfCcq', '$2y$10$8GbFty95Za/32oYGQ4UxEuHi2liOTKgxQR0CS53rVpYHXPMe4gzsK', NULL, NULL, NULL, '', 0, 0, '', ''),
-(5, 'dasdsadasdasddsad@mail.ru', 'K6RR2jZegCmFVIX', '$2y$10$Y8njHoJyPkMxwTCWhMM5fOuyJCfv6BeHADYV.Q2HMQiaUijgxD0IK', NULL, NULL, NULL, '', 0, 0, '', ''),
-(6, 'asdfghgfgjkl@mail.ru', '6XGmNtM0C20iF4W', '$2y$10$6AO5heWf4/IpB9y81eC.K.1Dm1IoVj0q8vL/wCN5ZwDcCIqIklV9q', NULL, NULL, NULL, '', 0, 0, '', '');
+(1, 'asd@asd.asd', 'asdf', '$2y$10$J5ulzSmavTK3HHkTvr0r3uLEf1rBaYS7VaBbaqzpuYx2Sl8YgdWAq', 'Данил', 'Ленченков', 'Сергеевич', '26.06.2003', 5317, 831802, 'ОТДЕЛОМ УФМС ПО ОРЕНБУРГСКОЙ ОБЛ', '13.07.2017');
 
 -- --------------------------------------------------------
 
@@ -61,25 +56,11 @@ INSERT INTO `account` (`id`, `email`, `login`, `password`, `name`, `surname`, `p
 --
 
 CREATE TABLE `account_session` (
-  `account_id` int NOT NULL,
+  `account_id` int(11) NOT NULL,
   `session_key` varchar(255) NOT NULL,
-  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` int NOT NULL DEFAULT '1'
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `active` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Дамп данных таблицы `account_session`
---
-
-INSERT INTO `account_session` (`account_id`, `session_key`, `date_created`, `active`) VALUES
-(1, '9707c91e15741d73e8756eff3d1fefbd8725ba2268eaf37ab4b1154fba837819', '2021-04-29 12:28:59', 1),
-(1, 'a5581d0e2b801341ec1633832089e9cc1589b5fd995ac4999ae8abc7d340a4a0', '2021-05-12 11:14:20', 1),
-(1, 'a97d06103e036d6c062a9f68cfe9cfa1e55c981e4473f03ab5776cf7ee76a060', '2021-05-12 11:19:59', 1),
-(1, '32c4d5889564e47bc7d3681d055ed5c032e818149f40ad5d814df1cde18a687c', '2021-05-12 11:24:00', 1),
-(2, 'd36d2b7c3324a6536b3a2627974b3e051e556f473cef01cf30566ee7d9adb373', '2021-05-12 11:24:12', 1),
-(1, 'ef0f6c2ec8237d40ccc7c2a36fc6f52eda51e8215627150237665a87d52ee171', '2021-05-12 12:23:40', 1),
-(1, 'db8f5a498fa5ef92b0077686179545f94b8152642abb5f16b6fcf8cf45a24795', '2021-05-12 19:55:30', 1),
-(1, 'd9e1197503184189011db4de84945d18c86c7e974988bd88c9802b0f32711c3c', '2021-05-13 08:00:07', 1);
 
 -- --------------------------------------------------------
 
@@ -88,7 +69,7 @@ INSERT INTO `account_session` (`account_id`, `session_key`, `date_created`, `act
 --
 
 CREATE TABLE `actions` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `time` varchar(120) NOT NULL,
   `name` text NOT NULL,
   `text` text NOT NULL,
@@ -114,11 +95,11 @@ INSERT INTO `actions` (`id`, `time`, `name`, `text`, `image`) VALUES
 --
 
 CREATE TABLE `article` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `title` text NOT NULL,
   `cover` varchar(255) NOT NULL,
   `text` text NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -140,32 +121,33 @@ INSERT INTO `article` (`id`, `title`, `cover`, `text`, `date`) VALUES
 --
 
 CREATE TABLE `boo_car` (
-  `id` int NOT NULL,
-  `manufacturer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `car_model_id` int NOT NULL,
-  `year` int NOT NULL,
-  `mileage` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `manufacturer` varchar(255) NOT NULL,
+  `car_model_id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `mileage` int(11) NOT NULL,
   `engine_volume` double NOT NULL,
   `engine_power` double NOT NULL,
-  `doors_number` int NOT NULL,
-  `car_body_id` int NOT NULL,
+  `doors_number` int(11) NOT NULL,
+  `car_body_id` int(11) NOT NULL,
   `trunk_volume` double NOT NULL,
-  `clearance` int NOT NULL,
-  `weight` int NOT NULL,
+  `clearance` int(11) NOT NULL,
+  `weight` int(11) NOT NULL,
   `tank_volume` double NOT NULL,
-  `height` int NOT NULL,
-  `width` int NOT NULL,
-  `length` int NOT NULL,
-  `functions` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `height` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `length` int(11) NOT NULL,
+  `functions` text NOT NULL,
+  `image` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `boo_car`
 --
 
-INSERT INTO `boo_car` (`id`, `manufacturer`, `car_model_id`, `year`, `mileage`, `engine_volume`, `engine_power`, `doors_number`, `car_body_id`, `trunk_volume`, `clearance`, `weight`, `tank_volume`, `height`, `width`, `length`, `functions`) VALUES
-(1, 'KIA', 3, 2018, 13050, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют'),
-(2, 'KIA', 4, 2013, 19250, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют');
+INSERT INTO `boo_car` (`id`, `manufacturer`, `car_model_id`, `year`, `mileage`, `engine_volume`, `engine_power`, `doors_number`, `car_body_id`, `trunk_volume`, `clearance`, `weight`, `tank_volume`, `height`, `width`, `length`, `functions`, `image`) VALUES
+(1, 'KIA', 3, 2018, 13050, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют', 'http://pngimg.com/uploads/kia/kia_PNG29.png'),
+(2, 'KIA', 4, 2013, 19250, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют', 'http://pngimg.com/uploads/kia/kia_PNG55.png');
 
 -- --------------------------------------------------------
 
@@ -174,15 +156,15 @@ INSERT INTO `boo_car` (`id`, `manufacturer`, `car_model_id`, `year`, `mileage`, 
 --
 
 CREATE TABLE `car` (
-  `id` int NOT NULL,
-  `account_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
   `manufacturer` varchar(60) NOT NULL,
   `model` varchar(60) NOT NULL,
   `win` varchar(60) NOT NULL,
   `engine` varchar(60) NOT NULL,
-  `date_plan_to` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_change_oil` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_end_guarantee` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_plan_to` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_change_oil` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_end_guarantee` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -190,13 +172,7 @@ CREATE TABLE `car` (
 --
 
 INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`, `date_plan_to`, `date_change_oil`, `date_end_guarantee`) VALUES
-(1, 1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06'),
-(2, 1, 'Lada', 'Granta', '86891268912646219', '879847532788948', '2021-05-13 10:11:35', '2021-05-13 10:11:35', '2021-05-13 10:11:35'),
-(3, 1, 'Lada', 'Granta', '1234567890121314', '879847532788948', '2021-05-13 10:22:37', '2021-05-13 10:22:37', '2021-05-13 10:22:37'),
-(4, 1, 'Lada', 'Granta', 'dhhdhdh', '879847532788948', '2021-05-13 10:23:06', '2021-05-13 10:23:06', '2021-05-13 10:23:06'),
-(5, 1, 'Lada', 'Granta', 'ghgyugh', '879847532788948', '2021-05-13 10:23:53', '2021-05-13 10:23:53', '2021-05-13 10:23:53'),
-(6, 1, 'Lada', 'Granta', 'dhdhhx', '879847532788948', '2021-05-13 10:25:08', '2021-05-13 10:25:08', '2021-05-13 10:25:08'),
-(7, 1, 'Lada', 'Granta', '647557567', '879847532788948', '2021-05-13 10:25:34', '2021-05-13 10:25:34', '2021-05-13 10:25:34');
+(1, 1, 'Lada', 'Granta', '86891268912646218', '879847532788948', '2021-04-29 12:35:06', '2021-04-29 12:35:06', '2021-04-29 12:35:06');
 
 -- --------------------------------------------------------
 
@@ -205,10 +181,10 @@ INSERT INTO `car` (`id`, `account_id`, `manufacturer`, `model`, `win`, `engine`,
 --
 
 CREATE TABLE `car_body` (
-  `id` int NOT NULL,
-  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `title` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `car_body`
@@ -224,9 +200,9 @@ INSERT INTO `car_body` (`id`, `name`, `title`) VALUES
 --
 
 CREATE TABLE `car_model` (
-  `id` int NOT NULL,
-  `title` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL,
+  `title` varchar(90) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `car_model`
@@ -245,31 +221,32 @@ INSERT INTO `car_model` (`id`, `title`) VALUES
 --
 
 CREATE TABLE `catalog_car` (
-  `id` int NOT NULL,
-  `manufacturer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `car_model_id` int NOT NULL,
-  `year` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `manufacturer` varchar(255) NOT NULL,
+  `car_model_id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
   `engine_volume` double NOT NULL,
   `engine_power` double NOT NULL,
-  `doors_number` int NOT NULL,
-  `car_body_id` int NOT NULL,
+  `doors_number` int(11) NOT NULL,
+  `car_body_id` int(11) NOT NULL,
   `trunk_volume` double NOT NULL,
-  `clearance` int NOT NULL,
-  `weight` int NOT NULL,
+  `clearance` int(11) NOT NULL,
+  `weight` int(11) NOT NULL,
   `tank_volume` double NOT NULL,
-  `height` int NOT NULL,
-  `width` int NOT NULL,
-  `length` int NOT NULL,
-  `functions` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `height` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `length` int(11) NOT NULL,
+  `functions` text NOT NULL,
+  `image` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `catalog_car`
 --
 
-INSERT INTO `catalog_car` (`id`, `manufacturer`, `car_model_id`, `year`, `engine_volume`, `engine_power`, `doors_number`, `car_body_id`, `trunk_volume`, `clearance`, `weight`, `tank_volume`, `height`, `width`, `length`, `functions`) VALUES
-(1, 'LADA', 1, 2016, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют'),
-(2, 'LADA', 2, 2020, 1.6, 96, 4, 1, 335, 140, 125, 80, 1500, 1700, 3905, 'Отсутствуют');
+INSERT INTO `catalog_car` (`id`, `manufacturer`, `car_model_id`, `year`, `engine_volume`, `engine_power`, `doors_number`, `car_body_id`, `trunk_volume`, `clearance`, `weight`, `tank_volume`, `height`, `width`, `length`, `functions`, `image`) VALUES
+(1, 'LADA', 1, 2016, 1.6, 96, 4, 1, 235, 140, 105, 50, 1500, 1700, 3905, 'Отсутствуют', 'https://pngimg.com/uploads/lada/lada_PNG84.png'),
+(2, 'LADA', 2, 2020, 1.6, 96, 4, 1, 335, 140, 125, 80, 1500, 1700, 3905, 'Отсутствуют', 'http://pngimg.com/uploads/lada/lada_PNG126.png');
 
 -- --------------------------------------------------------
 
@@ -278,7 +255,7 @@ INSERT INTO `catalog_car` (`id`, `manufacturer`, `car_model_id`, `year`, `engine
 --
 
 CREATE TABLE `master` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL,
   `surname` varchar(60) NOT NULL,
   `patronymic` varchar(60) NOT NULL,
@@ -299,13 +276,13 @@ INSERT INTO `master` (`id`, `name`, `surname`, `patronymic`, `position`) VALUES
 --
 
 CREATE TABLE `work` (
-  `id` int NOT NULL,
-  `car_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `car_id` int(11) NOT NULL,
   `type` enum('to','repair') NOT NULL DEFAULT 'to',
   `recomendation` varchar(200) NOT NULL,
-  `mileage` int NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `price` int NOT NULL
+  `mileage` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -323,7 +300,7 @@ INSERT INTO `work` (`id`, `car_id`, `type`, `recomendation`, `mileage`, `date`, 
 --
 
 CREATE TABLE `work_act` (
-  `work_id` int NOT NULL,
+  `work_id` int(11) NOT NULL,
   `text` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -344,8 +321,8 @@ INSERT INTO `work_act` (`work_id`, `text`) VALUES
 --
 
 CREATE TABLE `work_master` (
-  `work_id` int NOT NULL,
-  `master_id` int NOT NULL
+  `work_id` int(11) NOT NULL,
+  `master_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -362,12 +339,19 @@ INSERT INTO `work_master` (`work_id`, `master_id`) VALUES
 --
 
 CREATE TABLE `work_request` (
-  `id` int NOT NULL,
-  `car_id` int NOT NULL,
-  `type` enum('to','repair') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL,
+  `car_id` int(11) NOT NULL,
+  `type` enum('to','repair') NOT NULL,
+  `text` text NOT NULL,
+  `date` varchar(45) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `work_request`
+--
+
+INSERT INTO `work_request` (`id`, `car_id`, `type`, `text`, `date`) VALUES
+(1, 1, 'repair', 'adasda', '20.01.2021');
 
 --
 -- Индексы сохранённых таблиц
@@ -473,67 +457,67 @@ ALTER TABLE `work_request`
 -- AUTO_INCREMENT для таблицы `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `actions`
 --
 ALTER TABLE `actions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `article`
 --
 ALTER TABLE `article`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `boo_car`
 --
 ALTER TABLE `boo_car`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `car_body`
 --
 ALTER TABLE `car_body`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `car_model`
 --
 ALTER TABLE `car_model`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `catalog_car`
 --
 ALTER TABLE `catalog_car`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `master`
 --
 ALTER TABLE `master`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `work`
 --
 ALTER TABLE `work`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `work_request`
 --
 ALTER TABLE `work_request`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -549,8 +533,8 @@ ALTER TABLE `account_session`
 -- Ограничения внешнего ключа таблицы `boo_car`
 --
 ALTER TABLE `boo_car`
-  ADD CONSTRAINT `boo_car_ibfk_1` FOREIGN KEY (`car_body_id`) REFERENCES `car_body` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `boo_car_ibfk_2` FOREIGN KEY (`car_model_id`) REFERENCES `car_model` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `boo_car_ibfk_1` FOREIGN KEY (`car_body_id`) REFERENCES `car_body` (`id`),
+  ADD CONSTRAINT `boo_car_ibfk_2` FOREIGN KEY (`car_model_id`) REFERENCES `car_model` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `car`
@@ -562,8 +546,8 @@ ALTER TABLE `car`
 -- Ограничения внешнего ключа таблицы `catalog_car`
 --
 ALTER TABLE `catalog_car`
-  ADD CONSTRAINT `catalog_car_ibfk_1` FOREIGN KEY (`car_body_id`) REFERENCES `car_body` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `catalog_car_ibfk_2` FOREIGN KEY (`car_model_id`) REFERENCES `car_model` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `catalog_car_ibfk_1` FOREIGN KEY (`car_body_id`) REFERENCES `car_body` (`id`),
+  ADD CONSTRAINT `catalog_car_ibfk_2` FOREIGN KEY (`car_model_id`) REFERENCES `car_model` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `work`
@@ -588,7 +572,7 @@ ALTER TABLE `work_master`
 -- Ограничения внешнего ключа таблицы `work_request`
 --
 ALTER TABLE `work_request`
-  ADD CONSTRAINT `work_request_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `work_request_ibfk_1` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

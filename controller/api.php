@@ -42,10 +42,10 @@ function reg(){
 }
 
 function logout(){
-    if( dbExecute("UPDATE account_session SET active = 0 WHERE token = '{$_GET['token']}' LIMIT 1") ){
+    if( dbExecute("UPDATE account_session SET active = 0 WHERE session_key = '{$_GET['token']}' LIMIT 1") ){
         send_answer([], true);
     }
-    send_answer(["Неизвестная ошибка, Вы навеки тут"], true);
+    send_answer(["Неизвестная ошибка, Вы навеки тут"]);
 }
 
 function getCarList(){
@@ -160,8 +160,9 @@ function requestWork(){
     $car_id = verify_field("ID машины", $currentOptions['id'], 1, 0);
     $type = (in_array($currentOptions['type'], ["to", "repair"])) ? $currentOptions['type'] : send_answer(["Неверный тип запроса"]);
     $text = verify_field("Текст", $currentOptions['text'], 0, 1200);
+    $date = verify_field("Дата", $currentOptions['date'], 1, 45);
 
-    if( dbExecute("INSERT INTO work_request (car_id, type, text) VALUES ('{$car_id}', '{$type}', '{$text}')") ){
+    if( dbExecute("INSERT INTO work_request (car_id, type, text, date) VALUES ('{$car_id}', '{$type}', '{$text}', '{$date}')") ){
         send_answer([], true);
     }
     send_answer(["Неизвестная ошибка записи нового запроса"]);
@@ -173,7 +174,7 @@ function getAccount(){
 }
 
 function getAllBooAuto(){
-    if( $query = dbQuery("SELECT boo_car.id, boo_car.manufacturer, car_model.title as model, boo_car.year, boo_car.mileage FROM boo_car, car_model WHERE car_model.id = boo_car.car_model_id") ){
+    if( $query = dbQuery("SELECT boo_car.id, boo_car.image, boo_car.manufacturer, car_model.title as model, boo_car.year, boo_car.mileage FROM boo_car, car_model WHERE car_model.id = boo_car.car_model_id") ){
         send_answer(["cars" => $query], true);
     }
     send_answer(["Б/у автомобилей не найдено"]);
@@ -189,7 +190,7 @@ function getBooAuto(){
 }
 
 function getAllCatalogAuto(){
-    if( $query = dbQuery("SELECT catalog_car.id, catalog_car.manufacturer, car_model.title as model, catalog_car.year, car_body.title as car_body FROM catalog_car, car_model, car_body WHERE car_model.id = catalog_car.car_model_id AND car_body.id = catalog_car.car_body_id") ){
+    if( $query = dbQuery("SELECT catalog_car.id, catalog_car.image, catalog_car.manufacturer, car_model.title as model, catalog_car.year, car_body.title as car_body FROM catalog_car, car_model, car_body WHERE car_model.id = catalog_car.car_model_id AND car_body.id = catalog_car.car_body_id") ){
         send_answer(["cars" => $query], true);
     }
     send_answer(["Новых автомобилей не найдено"]);
